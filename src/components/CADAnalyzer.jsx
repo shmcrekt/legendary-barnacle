@@ -138,8 +138,8 @@ const CADAnalyzer = ({ onAnalysisComplete, onError }) => {
       </label>
       
       <div className="simulation-notice" style={{ background: '#10b981' }}>
-        ✅ REAL CAD ANALYSIS - Powered by OpenCASCADE.js
-      </div>
+  ✅ REAL CAD ANALYSIS - STL (Exact) + STEP (Enhanced Estimation)
+</div>
     </div>
   );
 };
