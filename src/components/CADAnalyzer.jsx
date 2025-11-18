@@ -45,37 +45,94 @@ const CADAnalyzer = ({ onAnalysisComplete, onError }) => {
         style={{ display: 'none' }}
       />
       
-      <label htmlFor="cad-file" style={{ 
-        cursor: isAnalyzing ? 'not-allowed' : 'pointer',
-        display: 'block',
-        width: '100%',
-        height: '100%'
-      }}>
-        <div style={{ textAlign: 'center', padding: isAnalyzing ? '1.5rem' : '2rem' }}>
+      <label 
+        htmlFor="cad-file" 
+        style={{ 
+          cursor: isAnalyzing ? 'not-allowed' : 'pointer',
+          display: 'block',
+          width: '100%',
+          height: '100%',
+          padding: '2rem'
+        }}
+      >
+        <div style={{ textAlign: 'center' }}>
           {!isAnalyzing ? (
             <>
-              <p style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>Upload 3D CAD File</p>
-              <p style={{ fontSize: '0.9rem', color: '#94a3b8', marginBottom: '1rem' }}>
-                <strong>Real-time CAD Analysis</strong><br/>
-                Supported: .STL, .STEP, .STP, .IGES
+              {/* Upload Icon */}
+              <div style={{ 
+                fontSize: '3rem',
+                marginBottom: '1rem',
+                color: '#3b82f6'
+              }}>
+                📁
+              </div>
+              
+              <p style={{ 
+                fontSize: '1.2rem', 
+                marginBottom: '0.5rem',
+                fontWeight: '600',
+                color: 'var(--text-primary)'
+              }}>
+                Upload CAD File
               </p>
               
-              <button className="upload-button">
-                Choose CAD File
-              </button>
+              <p style={{ 
+                fontSize: '1rem', 
+                color: '#94a3b8', 
+                marginBottom: '1.5rem',
+                lineHeight: '1.4'
+              }}>
+                Click anywhere or drag & drop<br/>
+                <strong>Supported: .STL, .STEP, .STP</strong>
+              </p>
+              
+              {/* Visual "button" that's not actually a button */}
+              <div style={{
+                display: 'inline-block',
+                background: 'var(--accent-primary)',
+                color: 'white',
+                padding: '0.75rem 1.5rem',
+                borderRadius: '8px',
+                fontWeight: '600',
+                fontSize: '1rem',
+                transition: 'all 0.2s',
+                transform: 'translateY(0)'
+              }}>
+                Select File
+              </div>
             </>
           ) : (
             <>
-              <p style={{ fontSize: '1rem', marginBottom: '1rem' }}>
-                Analyzing: <strong>{currentFile}</strong>
+              {/* Analyzing State */}
+              <div style={{ 
+                fontSize: '2.5rem',
+                marginBottom: '1rem'
+              }}>
+                ⚙️
+              </div>
+              
+              <p style={{ 
+                fontSize: '1.1rem', 
+                marginBottom: '0.5rem',
+                fontWeight: '600',
+                color: 'var(--text-primary)'
+              }}>
+                Analyzing CAD File
+              </p>
+              
+              <p style={{ 
+                fontSize: '0.9rem', 
+                color: '#94a3b8', 
+                marginBottom: '1.5rem'
+              }}>
+                {currentFile}
               </p>
               
               <div style={{ 
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center',
-                gap: '1rem',
-                marginBottom: '1rem'
+                gap: '0.75rem'
               }}>
                 <div style={{ 
                   width: '20px', 
@@ -85,19 +142,17 @@ const CADAnalyzer = ({ onAnalysisComplete, onError }) => {
                   borderRadius: '50%',
                   animation: 'spin 1s linear infinite'
                 }} />
-                <span>Processing {currentFile?.split('.').pop()?.toUpperCase()}...</span>
+                <span style={{ fontSize: '0.9rem', color: '#94a3b8' }}>
+                  Processing {currentFile?.split('.').pop()?.toUpperCase()}...
+                </span>
               </div>
-              
-              <p style={{ fontSize: '0.8rem', color: '#94a3b8' }}>
-                Analyzing geometry in real-time...
-              </p>
             </>
           )}
         </div>
       </label>
       
-      <div className="simulation-notice" style={{ background: '#10b981' }}>
-        ✅ REAL-TIME CAD ANALYSIS - No Artificial Delays
+      <div className="simulation-notice" style={{ background: '#10b981', marginTop: '0' }}>
+        ✅ REAL-TIME CAD ANALYSIS - Click Anywhere to Upload
       </div>
     </div>
   );
