@@ -3,7 +3,6 @@ import { analyzeCADFile, validateFile } from '../utils/cadAnalyzer';
 
 const CADAnalyzer = ({ onAnalysisComplete, onError }) => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [currentFile, setCurrentFile] = useState(null);
 
   const handleFileUpload = useCallback(async (event) => {
@@ -14,46 +13,23 @@ const CADAnalyzer = ({ onAnalysisComplete, onError }) => {
       // Validate file
       validateFile(file);
       setCurrentFile(file.name);
-      
       setIsAnalyzing(true);
-      setProgress(10);
-      
-      // Simulate progress for better UX
-      const progressInterval = setInterval(() => {
-        setProgress(prev => {
-          if (prev >= 90) {
-            clearInterval(progressInterval);
-            return prev;
-          }
-          return prev + 10;
-        });
-      }, 300);
 
-      // Analyze CAD file
-      setProgress(30);
+      // Analyze CAD file - NO ARTIFICIAL DELAYS!
       const analysis = await analyzeCADFile(file);
       
-      clearInterval(progressInterval);
-      setProgress(90);
-      
-      // Notify parent component
+      // Notify parent component immediately
       onAnalysisComplete(analysis);
       
-      setProgress(100);
-      
-      // Reset after success
-      setTimeout(() => {
-        setIsAnalyzing(false);
-        setProgress(0);
-        setCurrentFile(null);
-        event.target.value = '';
-      }, 1000);
+      // Reset
+      setIsAnalyzing(false);
+      setCurrentFile(null);
+      event.target.value = ''; // Reset file input
       
     } catch (error) {
       console.error('CAD analysis error:', error);
       onError(error.message);
       setIsAnalyzing(false);
-      setProgress(0);
       setCurrentFile(null);
     }
   }, [onAnalysisComplete, onError]);
@@ -80,7 +56,7 @@ const CADAnalyzer = ({ onAnalysisComplete, onError }) => {
             <>
               <p style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>Upload 3D CAD File</p>
               <p style={{ fontSize: '0.9rem', color: '#94a3b8', marginBottom: '1rem' }}>
-                <strong>Now with REAL STEP/STP support!</strong><br/>
+                <strong>Real-time CAD Analysis</strong><br/>
                 Supported: .STL, .STEP, .STP, .IGES
               </p>
               
@@ -112,34 +88,17 @@ const CADAnalyzer = ({ onAnalysisComplete, onError }) => {
                 <span>Processing {currentFile?.split('.').pop()?.toUpperCase()}...</span>
               </div>
               
-              <div style={{ marginTop: '1rem' }}>
-                <div style={{
-                  width: '100%',
-                  height: '6px',
-                  backgroundColor: '#334155',
-                  borderRadius: '3px',
-                  overflow: 'hidden'
-                }}>
-                  <div style={{
-                    width: `${progress}%`,
-                    height: '100%',
-                    backgroundColor: '#10b981',
-                    transition: 'width 0.3s ease',
-                    borderRadius: '3px'
-                  }} />
-                </div>
-                <p style={{ fontSize: '0.8rem', color: '#94a3b8', marginTop: '0.5rem' }}>
-                  Progress: {progress}%
-                </p>
-              </div>
+              <p style={{ fontSize: '0.8rem', color: '#94a3b8' }}>
+                Analyzing geometry in real-time...
+              </p>
             </>
           )}
         </div>
       </label>
       
       <div className="simulation-notice" style={{ background: '#10b981' }}>
-  ✅ REAL CAD ANALYSIS - STL (Exact) + STEP (Enhanced Estimation)
-</div>
+        ✅ REAL-TIME CAD ANALYSIS - No Artificial Delays
+      </div>
     </div>
   );
 };
