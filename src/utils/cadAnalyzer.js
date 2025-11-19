@@ -130,7 +130,7 @@ const extractPointFromSTEPLine = (line) => {
       if (coords.length >= 3) {
         // Find the part that contains numbers in parentheses
         const numbers = coords.map(coord => {
-          const numMatch = coord.match/(-?\d+\.?\d*)/);
+          const numMatch = coord.match(/(-?\d+\.?\d*)/);
           return numMatch ? parseFloat(numMatch[1]) : 0;
         });
         
